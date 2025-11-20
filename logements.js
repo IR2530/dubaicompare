@@ -1,28 +1,27 @@
 document.addEventListener("DOMContentLoaded", function() {
 
-    if (!window.location.pathname.toLowerCase().includes("logement")) return;
+  if (!window.location.pathname.toLowerCase().includes("logement")) return;
 
-    fetch("https://api.behomes.tech/v3/get_behomes_objects?lang=en&api_key=D6YQOUYS&filter=yes&objects_per_page=50&page=1")
-        .then(res => res.json())
-        .then(data => {
-            const logements = data.objects;
-            let html = "";
+  fetch("https://api.behomes.tech/v3/get_behomes_objects?lang=en&api_key=D6YQOUYS&filter=yes&objects_per_page=50&page=1")
+    .then(res => res.json())
+    .then(data => {
 
-            logements.forEach(item => {
-                html += `
+      // 🔥 Correction ici : on utilise data.response
+      const logements = data.response;
+
+      let html = "";
+
+      logements.forEach(item => {
+        html += `
           <div class="card">
-            <img src="${item.default_photo || ''}">
-            <div class="card-content">
-              <h3>${item.title}</h3>
-              <p><strong>Prix :</strong> ${item.price || "N/A"} €</p>
-              <p><strong>Ville :</strong> ${item.city || "Non spécifiée"}</p>
-              <p>${item.description ? item.description.substring(0,100) + "..." : ""}</p>
-            </div>
+            <h3>${item.project_label || "Sans titre"}</h3>
+            <p><strong>Description :</strong> ${item.Description || "Aucune description"}</p>
+            <p><strong>Location :</strong> ${item.location || "Inconnue"}</p>
           </div>
         `;
-            });
+      });
 
-            document.getElementById("logements").innerHTML = html;
-        })
-        .catch(e => console.error("Erreur API :", e));
+      document.getElementById("logements").innerHTML = html;
+    })
+    .catch(err => console.error("Erreur API :", err));
 });
