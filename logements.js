@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(res => res.json())
     .then(data => {
 
-      // 🔥 Correction ici : on utilise data.response
+      // Correction orthographe : data.response
       const logements = data.response;
 
       let html = "";
@@ -25,3 +25,4 @@ document.addEventListener("DOMContentLoaded", function() {
     })
     .catch(err => console.error("Erreur API :", err));
 });
+
